@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#33B2D2">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGFhZ18xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxODAuMTkgMjM4LjUyIj4KICA8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMjkuOC4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogMi4xLjEgQnVpbGQgMikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDIpOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDEwKTsKICAgICAgfQoKICAgICAgLnN0MiB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQyMSk7CiAgICAgIH0KCiAgICAgIC5zdDMgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MjcpOwogICAgICB9CgogICAgICAuc3Q0IHsKICAgICAgICBmaWxsOiAjZmZmOwogICAgICB9CgogICAgICAuc3Q1IHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDI2KTsKICAgICAgfQoKICAgICAgLnN0NiB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQxKTsKICAgICAgfQoKICAgICAgLnN0NyB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQ5KTsKICAgICAgfQoKICAgICAgLnN0OCB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQxOCk7CiAgICAgIH0KCiAgICAgIC5zdDkgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MjMpOwogICAgICB9CgogICAgICAuc3QxMCB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQ4KTsKICAgICAgfQoKICAgICAgLnN0MTEgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MTEpOwogICAgICB9CgogICAgICAuc3QxMiB7CiAgICAgICAgZmlsbDogbm9uZTsKICAgICAgfQoKICAgICAgLnN0MTMgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MTYpOwogICAgICB9CgogICAgICAuc3QxNCB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQyNCk7CiAgICAgIH0KCiAgICAgIC5zdDE1IHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDMpOwogICAgICAgIHN0cm9rZTogI2ZmZjsKICAgICAgICBzdHJva2UtbWl0ZXJsaW1pdDogMTA7CiAgICAgICAgc3Ryb2tlLXdpZHRoOiA4LjMxcHg7CiAgICAgIH0KCiAgICAgIC5zdDE2IHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDIyKTsKICAgICAgfQoKICAgICAgLnN0MTcgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MjkpOwogICAgICB9CgogICAgICAuc3QxOCB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQxOSk7CiAgICAgIH0KCiAgICAgIC5zdDE5IHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDEyKTsKICAgICAgfQoKICAgICAgLnN0MjAgewogICAgICAgIG9wYWNpdHk6IC44OTsKICAgICAgfQoKICAgICAgLnN0MjEgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MjgpOwogICAgICB9CgogICAgICAuc3QyMiB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQ3KTsKICAgICAgfQoKICAgICAgLnN0MjMgewogICAgICAgIG9wYWNpdHk6IC41NjsKICAgICAgfQoKICAgICAgLnN0MjQgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MjApOwogICAgICB9CgogICAgICAuc3QyNSB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQ0KTsKICAgICAgfQoKICAgICAgLnN0MjYgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MTQpOwogICAgICB9CgogICAgICAuc3QyNyB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQ1KTsKICAgICAgfQoKICAgICAgLnN0MjggewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50MjUpOwogICAgICB9CgogICAgICAuc3QyOSB7CiAgICAgICAgb3BhY2l0eTogLjc3OwogICAgICB9CgogICAgICAuc3QzMCB7CiAgICAgICAgZmlsbDogdXJsKCNsaW5lYXItZ3JhZGllbnQxNSk7CiAgICAgIH0KCiAgICAgIC5zdDMxIHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDE3KTsKICAgICAgfQoKICAgICAgLnN0MzIgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50Nik7CiAgICAgIH0KCiAgICAgIC5zdDMzIHsKICAgICAgICBkaXNwbGF5OiBub25lOwogICAgICAgIGZpbGw6ICMxYTFhMWU7CiAgICAgIH0KCiAgICAgIC5zdDM0IHsKICAgICAgICBmaWxsOiB1cmwoI2xpbmVhci1ncmFkaWVudDEzKTsKICAgICAgfQoKICAgICAgLnN0MzUgewogICAgICAgIGZpbGw6IHVybCgjbGluZWFyLWdyYWRpZW50KTsKICAgICAgfQoKICAgICAgLnN0MzYgewogICAgICAgIGNsaXAtcGF0aDogdXJsKCNjbGlwcGF0aCk7CiAgICAgIH0KCiAgICAgIC5zdDM3IHsKICAgICAgICBvcGFjaXR5OiAuODI7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgICA8Y2xpcFBhdGggaWQ9ImNsaXBwYXRoIj4KICAgICAgPHBhdGggY2xhc3M9InN0MTIiIGQ9Ik0xMTkuODIsMTg0LjMyYzAsMTguNjUtMTUuNjcsMzMuNTgtMzAuMjUsMzMuNTgtMTYuOTIsMC0zMC42My0xMy44NS0zMC42My0zMy4yczEzLjcxLTMzLjc3LDMwLjYzLTMzLjc3LDMwLjI1LDE0LjczLDMwLjI1LDMzLjM4WiIvPgogICAgPC9jbGlwUGF0aD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50IiB4MT0iODkuNTciIHkxPSIxNTMuMzUiIHgyPSI4OS41NyIgeTI9IjIxMi42NCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNmZmYiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNDFiMGQ0Ii8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQxIiB4MT0iODkuNjgiIHkxPSIxNTMuMzUiIHgyPSI4OS42OCIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQyIiB4MT0iODkuODkiIHkxPSIxNTMuMzUiIHgyPSI4OS44OSIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQzIiB4MT0iMTE4LjQxIiB5MT0iMTk5LjY5IiB4Mj0iMTE4LjQxIiB5Mj0iMTk5LjY5IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDQiIHgxPSI5MCIgeTE9IjE1My4zNSIgeDI9IjkwIiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDUiIHgxPSI2Mi4xNCIgeTE9IjE1My4zNSIgeDI9IjYyLjE0IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDYiIHgxPSI2OS4zIiB5MT0iMTUzLjM1IiB4Mj0iNjkuMyIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQ3IiB4MT0iNjUuNzIiIHkxPSIxNTMuMzUiIHgyPSI2NS43MiIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQ4IiB4MT0iNjkuMyIgeTE9IjE1My4zNSIgeDI9IjY5LjMiIHkyPSIyMTIuNjQiIHhsaW5rOmhyZWY9IiNsaW5lYXItZ3JhZGllbnQiLz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50OSIgeDE9Ijc3Ljg1IiB5MT0iMTUzLjM1IiB4Mj0iNzcuODUiIHkyPSIyMTIuNjQiIHhsaW5rOmhyZWY9IiNsaW5lYXItZ3JhZGllbnQiLz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50MTAiIHgxPSI3My41MSIgeTE9IjE1My4zNSIgeDI9IjczLjUxIiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDExIiB4MT0iNzcuODUiIHkxPSIxNTMuMzUiIHgyPSI3Ny44NSIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQxMiIgeDE9Ijg2LjE5IiB5MT0iMTUzLjM1IiB4Mj0iODYuMTkiIHkyPSIyMTIuNjQiIHhsaW5rOmhyZWY9IiNsaW5lYXItZ3JhZGllbnQiLz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50MTMiIHgxPSI4Mi4xOSIgeTE9IjE1My4zNSIgeDI9IjgyLjE5IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDE0IiB4MT0iODYuMTkiIHkxPSIxNTMuMzUiIHgyPSI4Ni4xOSIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQxNSIgeDE9Ijg2LjMxIiB5MT0iMTUzLjM1IiB4Mj0iODYuMzEiIHkyPSIyMTIuNjQiIHhsaW5rOmhyZWY9IiNsaW5lYXItZ3JhZGllbnQiLz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50MTYiIHgxPSI5My44OCIgeTE9IjE1My4zNSIgeDI9IjkzLjg4IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDE3IiB4MT0iODkuODkiIHkxPSIxNTMuMzUiIHgyPSI4OS44OSIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQxOCIgeDE9Ijg2LjMxIiB5MT0iMTUzLjM1IiB4Mj0iODYuMzEiIHkyPSIyMTIuNjQiIHhsaW5rOmhyZWY9IiNsaW5lYXItZ3JhZGllbnQiLz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50MTkiIHgxPSI5My44OCIgeTE9IjE1My4zNSIgeDI9IjkzLjg4IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDIwIiB4MT0iMTAyLjMiIHkxPSIxNTMuMzUiIHgyPSIxMDIuMyIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJsaW5lYXItZ3JhZGllbnQyMSIgeDE9Ijk3LjkyIiB5MT0iMTUzLjM1IiB4Mj0iOTcuOTIiIHkyPSIyMTIuNjQiIHhsaW5rOmhyZWY9IiNsaW5lYXItZ3JhZGllbnQiLz4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0ibGluZWFyLWdyYWRpZW50MjIiIHgxPSIxMDIuMyIgeTE9IjE1My4zNSIgeDI9IjEwMi4zIiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDIzIiB4MT0iMTEwLjM2IiB5MT0iMTUzLjM1IiB4Mj0iMTEwLjM2IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDI0IiB4MT0iMTA2LjI4IiB5MT0iMTUzLjM1IiB4Mj0iMTA2LjI4IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDI1IiB4MT0iMTEwLjM2IiB5MT0iMTUzLjM1IiB4Mj0iMTEwLjM2IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDI2IiB4MT0iMTE3LjcyIiB5MT0iMTUzLjM1IiB4Mj0iMTE3LjcyIiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDI3IiB4MT0iMTE0LjE0IiB5MT0iMTUzLjM1IiB4Mj0iMTE0LjE0IiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDI4IiB4MT0iMTE3LjcyIiB5MT0iMTUzLjM1IiB4Mj0iMTE3LjcyIiB5Mj0iMjEyLjY0IiB4bGluazpocmVmPSIjbGluZWFyLWdyYWRpZW50Ii8+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImxpbmVhci1ncmFkaWVudDI5IiB4MT0iNjIuMTQiIHkxPSIxNTMuMzUiIHgyPSI2Mi4xNCIgeTI9IjIxMi42NCIgeGxpbms6aHJlZj0iI2xpbmVhci1ncmFkaWVudCIvPgogIDwvZGVmcz4KICA8cmVjdCBpZD0iQWNodGVyZ3JvbmRfLV96d2FydCIgY2xhc3M9InN0MzMiIHg9Ii00My4wNCIgeT0iLTEwLjI5IiB3aWR0aD0iNjE0Ljk3IiBoZWlnaHQ9IjI2OS41OCIvPgogIDxnIGlkPSJMaW5rc2JvdmVuIj4KICAgIDxnPgogICAgICA8ZyBjbGFzcz0ic3QyMCI+CiAgICAgICAgPHBvbHlnb24gY2xhc3M9InN0NCIgcG9pbnRzPSIxMi4zMyAxMTcuMjEgNDcuMjcgMzkuNDEgNzEuNDQgODMuMjcgNzMuMjIgNzkuOTMgNDguNiAzNS4zNCA0NS44MiAzNS4zNCA3LjIxIDEyMC4yMSAxMC44NSAxMjAuMjEgMjAuMDEgMTIwLjIxIDUyLjA3IDEyMC4yMSA1My43NCAxMTcuMjEgMTIuMzMgMTE3LjIxIi8+CiAgICAgICAgPHBhdGggY2xhc3M9InN0NCIgZD0iTTEzMy42LDguMzJoLTMuNzhjLTMxLjU0LDcxLjI1LTQ5LjcsMTA4LjktNjEuMDksMTM0LjQ3LTkuOTUsMjIuMzItMTUuNDMsMzIuMDYtMTYuMjksNDEuNzgtLjkyLDEwLjM5LDIuODIsMjAuNzUsMTAuNTEsMjkuMTUsNy40Myw4LjEsMTcuMzYsMTEuMTIsMjYuNTcsMTEuMTIsMTcuMTUsMCwzNy4wOS0xNi40OSwzNy4wOS00MC4xMiwwLTEzLjM4LTkuMTktMzAuMTMtMTguOTItNDcuODYtMS42MS0yLjkzLTQuMzktOC40OC01Ljk3LTExLjQxbC0xLjk4LDQuMjljMS41OCwyLjk0LDMuMiw1LjksNC44Miw4Ljg0LDkuNSwxNy4zMiwxOC40OCwzMy42OCwxOC40OCw0Ni4xNCwwLDIxLjYxLTE4LjAxLDM2LjU0LTMzLjUxLDM2LjU0LTguMjIsMC0xNy4xNy0yLjU4LTIzLjkzLTkuOTYtNy03LjY1LTEwLjQxLTE3LjAzLTkuNTktMjYuNDIuOC05LjA3LDYuNDMtMTguNTMsMTUuOTUtNDAuNTQsMTEuNzQtMjcuMTMsMjguNTUtNTkuNjYsNjAuMjctMTMzLjFoMS4zOGMxNi4xLDAsMzQuNjYsMTEuMTksMzQuNjYsMzQuNDIsMCwxNi40Ny0xNC4yNSwzNS40Ni0zNC44OSwzNS40NmgtMTEuMDRsLTEuNjgsMy40M2gxMi43MmMyMS45OCwwLDM4LjcxLTE5Ljg0LDM4LjcxLTM4Ljg5LDAtMjUuNDctMTkuODEtMzcuMzUtMzguNDgtMzcuMzVaIi8+CiAgICAgIDwvZz4KICAgICAgPGcgY2xhc3M9InN0MzYiPgogICAgICAgIDxnIGNsYXNzPSJzdDI5Ij4KICAgICAgICAgIDxyZWN0IGNsYXNzPSJzdDM1IiB4PSI1OC44MyIgeT0iMTg4LjM0IiB3aWR0aD0iNjEuNDciIGhlaWdodD0iMS42NiIvPgogICAgICAgIDwvZz4KICAgICAgICA8ZyBjbGFzcz0ic3QyOSI+CiAgICAgICAgICA8cmVjdCBjbGFzcz0ic3Q2IiB4PSI1Ny45MSIgeT0iMTkxLjY4IiB3aWR0aD0iNjMuNTUiIGhlaWdodD0iMy4zMiIvPgogICAgICAgIDwvZz4KICAgICAgICA8ZyBjbGFzcz0ic3QyOSI+CiAgICAgICAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI1OC42IiB5PSIxOTYuMjUiIHdpZHRoPSI2Mi41OCIgaGVpZ2h0PSIzLjMyIi8+CiAgICAgICAgPC9nPgogICAgICAgIDxnIGNsYXNzPSJzdDIzIj4KICAgICAgICAgIDxwYXRoIGNsYXNzPSJzdDE1IiBkPSJNMTE4LjQxLDE5OS42OSIvPgogICAgICAgIDwvZz4KICAgICAgICA8ZyBjbGFzcz0ic3QzNyI+CiAgICAgICAgICA8cGF0aCBjbGFzcz0ic3QyNSIgZD0iTTYwLjc1LDIwMS4wN2w1OC41LS4yOHMtMzIuMDksNDMuMTUtNTguNS4yOFoiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgY2xhc3M9InN0MzciPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3QyNyIgY3g9IjYyLjE0IiBjeT0iMTg0LjciIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MzIiIGN4PSI2OS4zIiBjeT0iMTg0LjciIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MjIiIGN4PSI2NS43MiIgY3k9IjE4MS4xMyIgcj0iMS4wNSIvPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3QxMCIgY3g9IjY5LjMiIGN5PSIxNzcuNTUiIHI9IjEuMDUiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgY2xhc3M9InN0MzciPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3Q3IiBjeD0iNzcuODUiIGN5PSIxODQuNjUiIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjczLjUxIiBjeT0iMTgxLjA3IiByPSIxLjA1Ii8+CiAgICAgICAgICA8Y2lyY2xlIGNsYXNzPSJzdDExIiBjeD0iNzcuODUiIGN5PSIxNzcuNDkiIHI9IjEuMDUiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgY2xhc3M9InN0MzciPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3QxOSIgY3g9Ijg2LjE5IiBjeT0iMTg0LjciIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MzQiIGN4PSI4Mi4xOSIgY3k9IjE4MS4xMyIgcj0iMS4wNSIvPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3QyNiIgY3g9Ijg2LjE5IiBjeT0iMTc3LjU1IiByPSIxLjA1Ii8+CiAgICAgICAgPC9nPgogICAgICAgIDxnIGNsYXNzPSJzdDM3Ij4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MzAiIGN4PSI4Ni4zMSIgY3k9IjE4NC42NSIgcj0iMS4wNSIvPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3QxMyIgY3g9IjkzLjg4IiBjeT0iMTg0LjY1IiByPSIxLjA1Ii8+CiAgICAgICAgICA8Y2lyY2xlIGNsYXNzPSJzdDMxIiBjeD0iODkuODkiIGN5PSIxODEuMDciIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0OCIgY3g9Ijg2LjMxIiBjeT0iMTc3LjQ5IiByPSIxLjA1Ii8+CiAgICAgICAgICA8Y2lyY2xlIGNsYXNzPSJzdDE4IiBjeD0iOTMuODgiIGN5PSIxNzcuNDkiIHI9IjEuMDUiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgY2xhc3M9InN0MzciPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3QyNCIgY3g9IjEwMi4zIiBjeT0iMTg0LjciIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MiIgY3g9Ijk3LjkyIiBjeT0iMTgxLjAxIiByPSIxLjA1Ii8+CiAgICAgICAgICA8Y2lyY2xlIGNsYXNzPSJzdDE2IiBjeD0iMTAyLjMiIGN5PSIxNzcuNDkiIHI9IjEuMDUiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgY2xhc3M9InN0MzciPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3Q5IiBjeD0iMTEwLjM2IiBjeT0iMTg0LjciIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MTQiIGN4PSIxMDYuMjgiIGN5PSIxODEuMDEiIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MjgiIGN4PSIxMTAuMzYiIGN5PSIxNzcuNDkiIHI9IjEuMDUiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGcgY2xhc3M9InN0MzciPgogICAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3Q1IiBjeD0iMTE3LjcyIiBjeT0iMTg0LjY5IiByPSIxLjA1Ii8+CiAgICAgICAgICA8Y2lyY2xlIGNsYXNzPSJzdDMiIGN4PSIxMTQuMTQiIGN5PSIxODEuMTIiIHI9IjEuMDUiLz4KICAgICAgICAgIDxjaXJjbGUgY2xhc3M9InN0MjEiIGN4PSIxMTcuNzIiIGN5PSIxNzcuNTQiIHI9IjEuMDUiLz4KICAgICAgICA8L2c+CiAgICAgICAgPGNpcmNsZSBjbGFzcz0ic3QxNyIgY3g9IjYyLjE0IiBjeT0iMTc3LjQ5IiByPSIxLjA1Ii8+CiAgICAgIDwvZz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <title>Aquafin Calculator</title>
+    <style>
+        /* ============================================================
+           AQP AQUAFIN CALCULATOR V3.2.1 (multi-product, 2-comp split, lagen per product)
+           ------------------------------------------------------------
+           UI/UX = volledige spiegel van de Pleisterdikte Calculator.
+           Functie: product (1K/2K/RB400) + aantal lagen + oppervlakte
+                    -> tabel per laag + totaal.
+
+           GEZAGHEBBENDE VERBRUIKSWAARDEN: dichtingscalculator V7 LINE_CONFIG
+           (= AQP-standaard) + Schomburg TDS'en. Per laag (kg/m2, MENGKLAAR):
+             - 1K     : 1,75  (3,50 kg/m2 / 2 lagen ; 3 lagen ~ 5,30 W2.1)
+             - 2K     : 1,75  (3,50 kg/m2 / 2 lagen)            [2K/M-PLUS]
+             - RB400  : 2,40  (4,80 kg/m2 / 2 lagen, drukwater W2.1)
+
+           2-COMPONENTEN-SPLIT (geverifieerd via TDS-ratio + matbau/Schomburg):
+             - 2K   35 kg set = 25 kg poeder + 10 L vloeistof (ratio 2,5:1)
+             - RB400 24 kg set = 14,4 kg poeder + 9,6 L vloeistof (ratio 1,5:1)
+             vloeistof in L bij dichtheid ~1,0 (dispersie, officieel niet
+             gepubliceerd -> als zodanig gemarkeerd in de footer).
+           Tabel 2-comp: poeder (kg + x verpakking) | vloeistof (L + x verp.) | water (max.)
+           Tabel 1K   : Aquafin 1K (kg + x25kg) | water (verplicht 0,268 L/kg)
+           Water optioneel/max: 2K 0,5 L/35 kg ; RB400 0,24 L/24 kg.
+           x verpakking = mengklaar-kg / set als DECIMAAL (= aantal sets).
+           V3.1.1: beide 2-comp kolomkoppen met volledige productnaam.
+           V3.2.0: aantal-lagen-opties toegespitst per product (1K: 2/W1 of 3/W2.1; 2K: 1 of 2; RB400: 2). V3.2.1: 2K krijgt ook optie 1 laag.
+           Vorige versie: archive/...V3_1_0...
+           ============================================================ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            min-height: 100vh;
+            padding: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            max-width: 500px;
+            width: 100%;
+            padding: 8px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 4px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            min-height: 36px;
+        }
+
+        .reset-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: transparent;
+            border: 2px solid #33B2D2;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            padding: 0;
+        }
+
+        .reset-btn:hover { background: #33B2D2; }
+
+        .reset-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: #33B2D2;
+            transition: stroke 0.3s;
+        }
+
+        .reset-btn:hover svg { stroke: white; }
+
+        h1 {
+            color: #33B2D2;
+            font-size: clamp(18px, 5vw, 24px);
+            margin-bottom: 0;
+            padding-left: 6px;
+            padding-right: 35px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .input-group {
+            background: #f8f9fa;
+            padding: 6px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+        }
+
+        .input-group input {
+            background-color: white;
+            font-weight: 600;
+        }
+
+        .input-group input::placeholder {
+            color: #535554;
+            font-size: 17px;
+            font-weight: 600;
+            padding-left: 0;
+            text-indent: 2px;
+        }
+
+        label {
+            display: block;
+            color: #535554;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            padding-left: 13px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 18px;
+            height: 42px;
+            line-height: normal;
+            transition: border-color 0.3s;
+            -webkit-appearance: none;
+            appearance: none;
+            background-color: white;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #33B2D2;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] { -moz-appearance: textfield; }
+
+        input, select { touch-action: manipulation; }
+
+        input::placeholder {
+            color: #999;
+            font-size: 13px;
+            padding-left: 0;
+            text-indent: 2px;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder {
+            padding-left: 0;
+            text-indent: 2px;
+        }
+
+        select.placeholder-active { padding-left: 15px; }
+
+        .input-with-unit { position: relative; }
+
+        .input-unit {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 13px;
+            pointer-events: none;
+            display: none;
+            background: white;
+            white-space: nowrap;
+        }
+
+        .input-with-unit input:not(:placeholder-shown) ~ .input-unit { display: block; }
+        .input-with-unit select:not(.placeholder-active) ~ .input-unit { display: block; }
+
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23535554' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+            font-size: 18px;
+            color: #535554;
+        }
+
+        select.placeholder-active { font-size: 13px; color: #999; }
+
+        select option { color: #535554; font-size: 18px; }
+        select option:first-child { color: #999; font-size: 18px; }
+
+        .calc-group {
+            background: #f8f9fa;
+            padding: 6px;
+            border-radius: 8px;
+            margin-bottom: 4px;
+        }
+
+        .group-header {
+            font-weight: 600;
+            color: #535554;
+            margin-bottom: 4px;
+            font-size: 17px;
+        }
+
+        .group-inputs {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+        }
+
+        .group-inputs input,
+        .group-inputs select { margin-top: 0; }
+
+        .result-box {
+            background: linear-gradient(135deg, #33B2D2 0%, #2a8fa8 100%);
+            color: white;
+            padding: 8px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 4px;
+            overflow-x: auto;
+        }
+
+        .result-label {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 6px;
+        }
+
+        .result-empty {
+            font-size: 42px;
+            font-weight: bold;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
+        }
+
+        .result-table th {
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0.85;
+            padding: 2px 2px 6px;
+            text-align: right;
+        }
+
+        .result-table th:first-child { text-align: left; }
+
+        .result-table td {
+            font-size: 16px;
+            padding: 4px 2px;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .result-table td:first-child {
+            text-align: left;
+            opacity: 0.9;
+        }
+
+        .result-table .zak {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .result-table tfoot td {
+            border-top: 1px solid rgba(255,255,255,0.4);
+            font-weight: 700;
+            font-size: 17px;
+            padding-top: 7px;
+        }
+
+        .note-2comp {
+            background: #eaf7fb;
+            border: 1px solid #33B2D2;
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-top: 6px;
+            color: #2a6f82;
+            font-size: 12.5px;
+            line-height: 1.35;
+            display: none;
+        }
+
+        .note-2comp b { color: #1c5666; }
+
+        .footer {
+            text-align: center;
+            margin-top: 8px;
+            color: #999;
+            font-size: 8.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="h1"></h1>
+            <button class="reset-btn" id="resetBtn" onclick="resetCalculator()" aria-label="Reset">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="klantInfo" placeholder="">
+        </div>
+
+        <div class="calc-group">
+            <div class="group-header" id="gh-product"></div>
+            <div class="group-inputs">
+                <div class="input-with-unit">
+                    <select id="product">
+                        <option value="" selected></option>
+                        <option value="1k">Aquafin 1K</option>
+                        <option value="2k">Aquafin 2K</option>
+                        <option value="rb400">Aquafin RB400</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="calc-group">
+            <div class="group-header" id="gh-lagen"></div>
+            <div class="group-inputs">
+                <div class="input-with-unit">
+                    <select id="aantalLagen">
+                        <option value="0" selected></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="calc-group">
+            <div class="group-header" id="gh-opp"></div>
+            <div class="group-inputs">
+                <div class="input-with-unit">
+                    <input type="number" id="oppervlakte" placeholder="" min="0" step="0.1">
+                    <span class="input-unit" id="oppUnit"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-box">
+            <div class="result-label" id="resultLabel"></div>
+            <div class="result-empty" id="resultEmpty">--</div>
+            <table class="result-table" id="resultTable" style="display: none;">
+                <thead>
+                    <tr id="headRow"></tr>
+                </thead>
+                <tbody id="lagenBody"></tbody>
+                <tfoot>
+                    <tr id="totaalRow"></tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="note-2comp" id="note2comp"></div>
+
+        <div class="footer" id="footer"></div>
+    </div>
+
+    <script>
+        // === Vertalingen (per taal ingevuld door de generator) ===
+        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт Aquafin", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата на шар", "resetAria": "Скинути", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
+
+        // Gezaghebbende verbruikswaarden (taalneutraal): AQP dichtingscalculator V7 + Schomburg TDS.
+        var PRODUCTS = {
+            '1k': {
+                naam: 'Aquafin 1K', perLaag: 1.75, tweeComp: false,
+                verpakKg: 25, waterPerKg: 6.7 / 25,
+                lagenOpties: [{ n: 2, w: 'W1' }, { n: 3, w: 'W2.1' }]
+            },
+            '2k': {
+                naam: 'Aquafin 2K', perLaag: 1.75, tweeComp: true, ratioA: 2.5,
+                setKg: 35, poederPerSet: 25, vloeistofPerSet: 10, waterMaxPerSet: 0.5,
+                lagenOpties: [{ n: 1 }, { n: 2 }]
+            },
+            'rb400': {
+                naam: 'Aquafin RB400', perLaag: 2.40, tweeComp: true, ratioA: 1.5,
+                setKg: 24, poederPerSet: 14.4, vloeistofPerSet: 9.6, waterMaxPerSet: 0.24,
+                lagenOpties: [{ n: 2 }]
+            }
+        };
+
+        function lagenLabel(o) {
+            var w = (o.n === 1) ? T.layerSingular : T.layerPlural;
+            return o.n + ' ' + w + (o.w ? ' (' + o.w + ')' : '');
+        }
+
+        var inputs = ['oppervlakte'];
+
+        function updateUnitPosition(element) {
+            var unit = element.nextElementSibling;
+            if (!unit || !unit.classList.contains('input-unit')) return;
+
+            var isSelect = element.tagName === 'SELECT';
+            var value = isSelect ? element.options[element.selectedIndex].text : element.value;
+
+            if ((isSelect && element.value === '0') || (!isSelect && !value)) return;
+
+            if (value) {
+                var temp = document.createElement('span');
+                temp.style.visibility = 'hidden';
+                temp.style.position = 'absolute';
+                temp.style.font = window.getComputedStyle(element).font;
+                temp.style.fontSize = window.getComputedStyle(element).fontSize;
+                temp.textContent = value;
+                document.body.appendChild(temp);
+                var textWidth = temp.offsetWidth;
+                document.body.removeChild(temp);
+                unit.style.left = (13 + textWidth + 5) + 'px';
+            }
+        }
+
+        inputs.forEach(function(id) {
+            var element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', function() {
+                    calculate();
+                    updateUnitPosition(this);
+                });
+                if (element.value) updateUnitPosition(element);
+            }
+        });
+
+        function styleSelect(sel) {
+            if (sel.value === '' || sel.value === '0') {
+                sel.classList.add('placeholder-active');
+            } else {
+                sel.classList.remove('placeholder-active');
+                updateUnitPosition(sel);
+            }
+        }
+
+        var productSelect = document.getElementById('product');
+        var lagenSelect = document.getElementById('aantalLagen');
+
+        // Lagen-opties toespitsen op het gekozen product (AQP-standaard).
+        // 1 optie -> automatisch geselecteerd; meerdere -> placeholder afdwingen.
+        function buildLagenForProduct() {
+            var p = PRODUCTS[productSelect.value];
+            lagenSelect.innerHTML = '';
+            var ph = document.createElement('option');
+            ph.value = '0'; ph.textContent = T.layersPh;
+            lagenSelect.appendChild(ph);
+            if (p && p.lagenOpties) {
+                p.lagenOpties.forEach(function(o) {
+                    var opt = document.createElement('option');
+                    opt.value = o.n;
+                    opt.textContent = lagenLabel(o);
+                    lagenSelect.appendChild(opt);
+                });
+                lagenSelect.value = (p.lagenOpties.length === 1) ? String(p.lagenOpties[0].n) : '0';
+            } else {
+                lagenSelect.value = '0';
+            }
+            styleSelect(lagenSelect);
+        }
+
+        productSelect.classList.add('placeholder-active');
+        lagenSelect.classList.add('placeholder-active');
+        productSelect.addEventListener('change', function() {
+            styleSelect(this);
+            buildLagenForProduct();
+            calculate();
+        });
+        lagenSelect.addEventListener('change', function() { styleSelect(this); calculate(); });
+
+        function resetCalculator() {
+            document.getElementById('klantInfo').value = '';
+            document.getElementById('oppervlakte').value = '';
+            document.getElementById('product').value = '';
+            productSelect.classList.add('placeholder-active');
+            buildLagenForProduct();   // -> alleen placeholder zolang geen product gekozen
+
+            document.getElementById('resultEmpty').style.display = '';
+            document.getElementById('resultTable').style.display = 'none';
+            document.getElementById('lagenBody').innerHTML = '';
+            document.getElementById('note2comp').style.display = 'none';
+        }
+
+        // === statische teksten toepassen uit T ===
+        function applyT() {
+            document.documentElement.lang = T.lang;
+            document.title = T.title;
+            document.getElementById('h1').textContent = T.title;
+            document.getElementById('resetBtn').setAttribute('aria-label', T.resetAria);
+            document.getElementById('klantInfo').placeholder = T.clientPh;
+            document.getElementById('gh-product').textContent = T.productLabel;
+            productSelect.options[0].textContent = T.productPh;
+            document.getElementById('gh-lagen').textContent = T.layersLabel;
+            document.getElementById('gh-opp').textContent = T.surfaceLabel;
+            document.getElementById('oppervlakte').placeholder = T.surfacePh;
+            document.getElementById('oppUnit').textContent = T.unitM2;
+            document.getElementById('resultLabel').textContent = T.resultLabel;
+            document.getElementById('footer').textContent = T.footer;
+        }
+
+        applyT();
+        buildLagenForProduct();   // init: geen product -> enkel placeholder
+
+        function nf(x, d) {
+            return x.toLocaleString(T.locale, { minimumFractionDigits: d, maximumFractionDigits: d });
+        }
+
+        // cel "41,3 kg (1,65x 25kg)" - getallen + verpakking via locale
+        function hoeveelCel(waarde, eenheid, count, packValue, packUnit) {
+            var dec = (packValue === Math.floor(packValue)) ? 0 : 1;
+            return nf(waarde, 1) + ' ' + eenheid + '<span class="zak"> (' + nf(count, 2) + 'x ' + nf(packValue, dec) + packUnit + ')</span>';
+        }
+
+        // bouw 1 rij (per laag of totaal) voor het gekozen product
+        function rij(labelCel, mengklaarKg, p) {
+            if (!p.tweeComp) {
+                // 1K: poeder (kg) + verplicht water (L)
+                var poederCel = hoeveelCel(mengklaarKg, T.unitKg, mengklaarKg / p.verpakKg, p.verpakKg, T.unitKg);
+                var water = nf(mengklaarKg * p.waterPerKg, 1) + ' ' + T.unitL;
+                return '<td>' + labelCel + '</td><td>' + poederCel + '</td><td>' + water + '</td>';
+            }
+            // 2-comp: aantal sets bepaalt poeder, vloeistof en max. water
+            var sets = mengklaarKg / p.setKg;
+            var poeder = hoeveelCel(sets * p.poederPerSet, T.unitKg, sets, p.poederPerSet, T.unitKg);
+            var vloeistof = hoeveelCel(sets * p.vloeistofPerSet, T.unitL, sets, p.vloeistofPerSet, T.unitL);
+            var water = T.maxWord + ' ' + nf(sets * p.waterMaxPerSet, 2) + ' ' + T.unitL;
+            return '<td>' + labelCel + '</td><td>' + poeder + '</td><td>' + vloeistof + '</td><td>' + water + '</td>';
+        }
+
+        function calculate() {
+            var prodKey = document.getElementById('product').value;
+            var oppervlakte = parseFloat(document.getElementById('oppervlakte').value) || 0;
+            var aantalLagen = parseFloat(document.getElementById('aantalLagen').value) || 0;
+
+            var emptyEl = document.getElementById('resultEmpty');
+            var tableEl = document.getElementById('resultTable');
+            var noteEl = document.getElementById('note2comp');
+
+            var p = PRODUCTS[prodKey];
+            if (!p || oppervlakte <= 0 || aantalLagen <= 0) {
+                emptyEl.style.display = '';
+                tableEl.style.display = 'none';
+                noteEl.style.display = 'none';
+                return;
+            }
+
+            // kolomkoppen product-afhankelijk
+            if (p.tweeComp) {
+                document.getElementById('headRow').innerHTML =
+                    '<th></th><th>' + p.naam + ' ' + T.powder + '</th><th>' + p.naam + ' ' + T.liquid + '</th><th>' + T.colWaterMax + '</th>';
+            } else {
+                document.getElementById('headRow').innerHTML =
+                    '<th></th><th>' + p.naam + '</th><th>' + T.colWater + '</th>';
+            }
+
+            var matPerLaag = oppervlakte * p.perLaag;   // mengklaar kg per laag
+            var totaalMat = matPerLaag * aantalLagen;   // mengklaar kg totaal
+
+            var body = document.getElementById('lagenBody');
+            body.innerHTML = '';
+            for (var i = 1; i <= aantalLagen; i++) {
+                var tr = document.createElement('tr');
+                tr.innerHTML = rij(T.layerSingular + ' ' + i + T.colon, matPerLaag, p);
+                body.appendChild(tr);
+            }
+            document.getElementById('totaalRow').innerHTML = rij(T.totalWord + T.colon, totaalMat, p);
+
+            // 2-componenten notitie
+            if (p.tweeComp) {
+                var ratioStr = nf(p.ratioA, 1) + ' : 1';
+                var watermax = T.waterMaxTpl.replace('{amt}', nf(p.waterMaxPerSet, 2)).replace('{setkg}', p.setKg);
+                noteEl.innerHTML = '<b>' + T.noteBoldTpl.replace('{naam}', p.naam) + '</b> '
+                    + T.noteRestTpl.replace('{ratio}', ratioStr).replace('{watermax}', watermax);
+                noteEl.style.display = 'block';
+            } else {
+                noteEl.style.display = 'none';
+            }
+
+            emptyEl.style.display = 'none';
+            tableEl.style.display = 'table';
+        }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').catch(function() {});
+            });
+        }
+    </script>
+</body>
+</html>
