@@ -1,9 +1,10 @@
 /* AQP Aquafin Calculator V3.3.0 (uk) - service worker
-   Offline-werking op de werf. navigate=network-first, assets=cache-first. */
+   Offline-werking op de werf. navigate=network-first, assets=cache-first.
+   Deploy = index.html in mapwortel; precache de wortel-navigatie ('./'). */
 var CACHE = 'aqp-aquafin-uk-v3-3-0';
 self.addEventListener('install', function(e) {
     e.waitUntil(caches.open(CACHE).then(function(c) {
-        return c.addAll(['AQP_Aquafin_Calculator_V3_3_0_UK_UTF8.html']).catch(function() {});
+        return c.addAll(['./']).catch(function() {});
     }).then(function() { return self.skipWaiting(); }));
 });
 self.addEventListener('activate', function(e) { e.waitUntil(self.clients.claim()); });
