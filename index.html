@@ -258,6 +258,7 @@
             font-size: 15px;
             opacity: 0.9;
             margin-bottom: 6px;
+            font-weight: 700;
         }
 
         .result-empty {
@@ -269,40 +270,68 @@
             width: 100%;
             border-collapse: collapse;
             color: #fff;
+            table-layout: fixed;          /* gelijkmatige kolomverdeling, desktop + mobiel */
+            font-weight: 700;             /* heel het kader zelfde gewicht als "totaal:" */
         }
 
         .result-table th {
-            font-size: 13px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             opacity: 0.85;
-            padding: 2px 2px 6px;
-            text-align: right;
+            padding: 2px 4px 6px;
+            text-align: center;           /* kop gecentreerd boven de waarden */
+            white-space: normal;
+            line-height: 1.15;
         }
 
-        .result-table th:first-child { text-align: left; }
+        /* labelkolom (laag/totaal) smal + links; waardekolommen delen de rest gelijk */
+        .result-table th:first-child,
+        .result-table td:first-child {
+            width: 20%;
+            text-align: left;
+        }
 
         .result-table td {
-            font-size: 16px;
-            padding: 4px 2px;
-            text-align: right;
+            font-size: 15px;
+            padding: 4px 4px;
+            text-align: center;           /* waarden gecentreerd onder hun kop */
             white-space: nowrap;
         }
 
-        .result-table td:first-child {
-            text-align: left;
-            opacity: 0.9;
-        }
+        .result-table td:first-child { opacity: 0.9; }
 
+        /* "(1,65x 25kg)" onder de kg/L-waarde -> smallere kolommen, past op 1 schermbreedte */
         .result-table .zak {
-            font-size: 12px;
+            display: block;
+            font-size: 11px;
             opacity: 0.8;
         }
 
         .result-table tfoot td {
             border-top: 1px solid rgba(255,255,255,0.4);
             font-weight: 700;
-            font-size: 17px;
+            font-size: 16px;
             padding-top: 7px;
+        }
+
+        /* "Mee te nemen: 5 zakken" - praktisch bestel-/laadaantal (naar boven afgerond) */
+        .take-along {
+            margin-top: 10px;
+            padding-top: 9px;
+            border-top: 1px solid rgba(255,255,255,0.4);
+            text-align: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .take-along b { font-size: 17px; }
+
+        /* smalle telefoons: alles iets compacter zodat de 4-koloms 2K-tabel past */
+        @media (max-width: 400px) {
+            .result-table th { font-size: 11px; }
+            .result-table td { font-size: 13px; }
+            .result-table tfoot td { font-size: 14px; }
+            .result-table .zak { font-size: 10px; }
         }
 
         .note-2comp {
@@ -318,6 +347,9 @@
         }
 
         .note-2comp b { color: #1c5666; }
+
+        .meng-row { display: grid; gap: 8px; align-items: start; }   /* kolommen dynamisch per product */
+        .meng-label { font-size: 12px; color: #535554; font-weight: 600; margin-bottom: 3px; text-transform: capitalize; line-height: 1.2; }
 
         .footer {
             text-align: center;
@@ -339,10 +371,6 @@
             </button>
         </div>
 
-        <div class="input-group">
-            <input type="text" id="klantInfo" placeholder="">
-        </div>
-
         <div class="calc-group">
             <div class="group-header" id="gh-product"></div>
             <div class="group-inputs">
@@ -352,6 +380,7 @@
                         <option value="1k">Aquafin 1K</option>
                         <option value="2k">Aquafin 2K</option>
                         <option value="rb400">Aquafin RB400</option>
+                        <option value="m30" id="opt-m30">Asocret M30</option>
                     </select>
                 </div>
             </div>
@@ -360,10 +389,14 @@
         <div class="calc-group">
             <div class="group-header" id="gh-lagen"></div>
             <div class="group-inputs">
-                <div class="input-with-unit">
+                <div class="input-with-unit" id="lagenWrap">
                     <select id="aantalLagen">
                         <option value="0" selected></option>
                     </select>
+                </div>
+                <div class="input-with-unit" id="dikteWrap" style="display: none;">
+                    <input type="text" inputmode="decimal" id="dikteMm" placeholder="">
+                    <span class="input-unit" id="u-dikte">mm</span>
                 </div>
             </div>
         </div>
@@ -390,16 +423,22 @@
                     <tr id="totaalRow"></tr>
                 </tfoot>
             </table>
+            <div class="take-along" id="takeAlong" style="display: none;"></div>
         </div>
 
         <div class="note-2comp" id="note2comp"></div>
+
+        <div class="calc-group">
+            <div class="group-header" id="gh-meng"></div>
+            <div class="meng-row" id="mengRow"></div>
+        </div>
 
         <div class="footer" id="footer"></div>
     </div>
 
     <script>
         // === Vertalingen (per taal ingevuld door de generator) ===
-        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт Aquafin", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата на шар", "resetAria": "Скинути", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
+        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт Aquafin", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата", "resetAria": "Скинути", "mengTitle": "Помічник змішування", "mengPoederPh": "Порошок (кг)", "ratioWord": "співвідношення", "optWord": "необов'язково", "takeWord": "Взяти з собою", "bagsWord": "мішків", "setsWord": "наборів", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "m30Option": "Asocret M30 (опорядження)", "dikteLabel": "Товщина опоряджувального шару (мм)", "resultAfwerk": "Витрата опоряджувального шару", "afwerkWord": "опорядження", "m30Note": "Asocret M30 - лише для опоряджувального шару, в 1 шар. Стандарт 5 мм (TDS: 3-30 мм). Витрата 1,4 кг/м² на мм. 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
 
         // Gezaghebbende verbruikswaarden (taalneutraal): AQP dichtingscalculator V7 + Schomburg TDS.
         var PRODUCTS = {
@@ -417,6 +456,14 @@
                 naam: 'Aquafin RB400', perLaag: 2.40, tweeComp: true, ratioA: 1.5,
                 setKg: 24, poederPerSet: 14.4, vloeistofPerSet: 9.6, waterMaxPerSet: 0.24,
                 lagenOpties: [{ n: 2 }]
+            },
+            // Asocret M30: afwerkingslaag, altijd 1 laag, dikte-gedreven (TDS: 1,4 kg/m2/mm).
+            // 1-component (poeder + water). Water TDS 4,5-5,25 L/25 kg -> meng-hulp: middelpunt 4,875.
+            'm30': {
+                naam: 'Asocret M30', afwerking: true, tweeComp: false,
+                kgPerMm: 1.4, verpakKg: 25, waterPerKg: 4.875 / 25,
+                waterMinPerKg: 4.5 / 25, waterMaxPerKg: 5.25 / 25,
+                dikteDefault: 5, dikteMin: 3, dikteMax: 30
             }
         };
 
@@ -495,26 +542,119 @@
             styleSelect(lagenSelect);
         }
 
+        // M30 = afwerkingslaag (1 laag, dikte-gedreven): toon dikte-veld i.p.v. lagen-keuze.
+        function applyProductMode() {
+            var p = PRODUCTS[productSelect.value];
+            var afwerk = !!(p && p.afwerking);
+            document.getElementById('lagenWrap').style.display = afwerk ? 'none' : '';
+            document.getElementById('dikteWrap').style.display = afwerk ? '' : 'none';
+            document.getElementById('gh-lagen').textContent = afwerk ? T.dikteLabel : T.layersLabel;
+            var d = document.getElementById('dikteMm');
+            if (afwerk && !d.value) { d.value = String(p.dikteDefault); updateUnitPosition(d); }
+        }
+
         productSelect.classList.add('placeholder-active');
         lagenSelect.classList.add('placeholder-active');
         productSelect.addEventListener('change', function() {
             styleSelect(this);
             buildLagenForProduct();
+            applyProductMode();
             calculate();
+            mengBuild();
         });
         lagenSelect.addEventListener('change', function() { styleSelect(this); calculate(); });
+        document.getElementById('dikteMm').addEventListener('input', function() {
+            calculate(); updateUnitPosition(this);
+        });
 
         function resetCalculator() {
-            document.getElementById('klantInfo').value = '';
             document.getElementById('oppervlakte').value = '';
             document.getElementById('product').value = '';
+            document.getElementById('dikteMm').value = '';
             productSelect.classList.add('placeholder-active');
             buildLagenForProduct();   // -> alleen placeholder zolang geen product gekozen
+            applyProductMode();       // -> terug naar lagen-modus
+            mengBuild();              // -> meng-hulp leegmaken/herbouwen
 
             document.getElementById('resultEmpty').style.display = '';
             document.getElementById('resultTable').style.display = 'none';
             document.getElementById('lagenBody').innerHTML = '';
             document.getElementById('note2comp').style.display = 'none';
+            document.getElementById('takeAlong').style.display = 'none';
+        }
+
+        // === Meng-hulp: per product invulbare cellen, onderling gekoppeld via de set-verhouding ===
+        // 1K: poeder (kg) <-> water (L).  2K/RB400: poeder (kg) <-> vloeistof (L) <-> water (max., L).
+        // Elke cel is invulbaar; de andere(n) volgen via de set-verhouding (poeder:vloeistof:water-max).
+        var mengCells = [];
+
+        function mengComps(p) {
+            if (!p) return [];
+            // M30: poeder invulbaar -> water als TDS-range (4,5-5,25 L/25 kg), niet-invulbaar (range = niet omkeerbaar)
+            if (p.afwerking) {
+                return [
+                    { per: p.verpakKg, unit: T.unitKg, word: T.powder },
+                    { rangeMin: p.verpakKg * p.waterMinPerKg, rangeMax: p.verpakKg * p.waterMaxPerKg, unit: T.unitL, word: T.colWater }
+                ];
+            }
+            if (!p.tweeComp) {
+                return [
+                    { per: p.verpakKg, unit: T.unitKg, word: T.powder },
+                    { per: p.verpakKg * p.waterPerKg, unit: T.unitL, word: T.colWater }
+                ];
+            }
+            return [
+                { per: p.poederPerSet, unit: T.unitKg, word: T.powder },
+                { per: p.vloeistofPerSet, unit: T.unitL, word: T.liquid },
+                { per: p.waterMaxPerSet, unit: T.unitL, word: T.colWater + ' (' + T.maxWord + ')' }
+            ];
+        }
+
+        function mengBuild() {
+            var p = PRODUCTS[document.getElementById('product').value];
+            var row = document.getElementById('mengRow');
+            row.innerHTML = '';
+            mengCells = [];
+            var comps = mengComps(p);
+            row.style.gridTemplateColumns = comps.length ? ('repeat(' + comps.length + ', 1fr)') : '1fr';
+            comps.forEach(function (c) {
+                var isRange = (c.rangeMin !== undefined);
+                var cellWrap = document.createElement('div'); cellWrap.className = 'meng-cell';
+                var lab = document.createElement('div'); lab.className = 'meng-label'; lab.textContent = c.word;
+                var wrap = document.createElement('div'); wrap.className = 'input-with-unit';
+                var inp = document.createElement('input');
+                inp.type = 'text'; inp.setAttribute('inputmode', 'decimal'); inp.placeholder = '';
+                if (isRange) { inp.readOnly = true; }   // range = enkel weergave (niet omkeerbaar)
+                var u = document.createElement('span'); u.className = 'input-unit'; u.textContent = c.unit;
+                wrap.appendChild(inp); wrap.appendChild(u);
+                cellWrap.appendChild(lab); cellWrap.appendChild(wrap);
+                row.appendChild(cellWrap);
+                var cell = { el: inp, per: c.per, rangeMin: c.rangeMin, rangeMax: c.rangeMax };
+                if (!isRange) {
+                    inp.addEventListener('input', function () { updateMeng(cell); updateUnitPosition(inp); });
+                }
+                mengCells.push(cell);
+            });
+        }
+
+        function pnum(s) { return parseFloat(String(s).replace(/\s/g, '').replace(',', '.')) || 0; }
+
+        function updateMeng(src) {
+            var v = pnum(src.el.value);
+            if (v <= 0) {
+                mengCells.forEach(function (c) { if (c !== src) { c.el.value = ''; } });
+                return;
+            }
+            var base = v / src.per;   // aantal sets/eenheden
+            mengCells.forEach(function (c) {
+                if (c === src) return;
+                if (c.rangeMin !== undefined) {
+                    c.el.value = nf(base * c.rangeMin, 1) + '-' + nf(base * c.rangeMax, 1);   // TDS-range
+                } else {
+                    c.el.value = nf(base * c.per, 2);   // locale-komma (bv. "11,20")
+                }
+                updateUnitPosition(c.el);
+            });
         }
 
         // === statische teksten toepassen uit T ===
@@ -523,43 +663,56 @@
             document.title = T.title;
             document.getElementById('h1').textContent = T.title;
             document.getElementById('resetBtn').setAttribute('aria-label', T.resetAria);
-            document.getElementById('klantInfo').placeholder = T.clientPh;
             document.getElementById('gh-product').textContent = T.productLabel;
             productSelect.options[0].textContent = T.productPh;
+            document.getElementById('opt-m30').textContent = T.m30Option;
             document.getElementById('gh-lagen').textContent = T.layersLabel;
             document.getElementById('gh-opp').textContent = T.surfaceLabel;
             document.getElementById('oppervlakte').placeholder = T.surfacePh;
             document.getElementById('oppUnit').textContent = T.unitM2;
             document.getElementById('resultLabel').textContent = T.resultLabel;
+            document.getElementById('gh-meng').textContent = T.mengTitle;
             document.getElementById('footer').textContent = T.footer;
         }
 
         applyT();
         buildLagenForProduct();   // init: geen product -> enkel placeholder
+        applyProductMode();       // init: lagen-modus (geen afwerkingsproduct)
+        mengBuild();              // init: meng-hulp cellen (leeg tot product gekozen)
 
         function nf(x, d) {
             return x.toLocaleString(T.locale, { minimumFractionDigits: d, maximumFractionDigits: d });
         }
 
-        // cel "41,3 kg (1,65x 25kg)" - getallen + verpakking via locale
-        function hoeveelCel(waarde, eenheid, count, packValue, packUnit) {
-            var dec = (packValue === Math.floor(packValue)) ? 0 : 1;
-            return nf(waarde, 1) + ' ' + eenheid + '<span class="zak"> (' + nf(count, 2) + 'x ' + nf(packValue, dec) + packUnit + ')</span>';
+        // cel "42,0 kg (1x 25kg + 17kg)" - praktische ontbinding: volle verpakkingen + losse rest.
+        // Rest exact (1 decimaal, ,0 weggelaten) zodat de delen optellen tot het totaal.
+        function hoeveelCel(waarde, eenheid, packValue, packUnit) {
+            var full = Math.floor(waarde / packValue + 1e-9);   // volle verpakkingen
+            var rem = waarde - full * packValue;                // losse rest (exact)
+            var pv = nf(packValue, packValue === Math.floor(packValue) ? 0 : 1);
+            var parts = [];
+            if (full >= 1) parts.push(full + 'x ' + pv + packUnit);   // steeds als veelvoud, ook 1x
+            if (rem >= 0.05) {
+                var remStr = (Math.abs(rem - Math.round(rem)) < 0.05) ? nf(Math.round(rem), 0) : nf(rem, 1);
+                parts.push(remStr + packUnit);
+            }
+            if (!parts.length) parts.push(nf(waarde, 1) + packUnit);   // ~0
+            return nf(waarde, 1) + ' ' + eenheid + '<span class="zak"> (' + parts.join(' + ') + ')</span>';
         }
 
         // bouw 1 rij (per laag of totaal) voor het gekozen product
         function rij(labelCel, mengklaarKg, p) {
             if (!p.tweeComp) {
                 // 1K: poeder (kg) + verplicht water (L)
-                var poederCel = hoeveelCel(mengklaarKg, T.unitKg, mengklaarKg / p.verpakKg, p.verpakKg, T.unitKg);
+                var poederCel = hoeveelCel(mengklaarKg, T.unitKg, p.verpakKg, T.unitKg);
                 var water = nf(mengklaarKg * p.waterPerKg, 1) + ' ' + T.unitL;
                 return '<td>' + labelCel + '</td><td>' + poederCel + '</td><td>' + water + '</td>';
             }
             // 2-comp: aantal sets bepaalt poeder, vloeistof en max. water
             var sets = mengklaarKg / p.setKg;
-            var poeder = hoeveelCel(sets * p.poederPerSet, T.unitKg, sets, p.poederPerSet, T.unitKg);
-            var vloeistof = hoeveelCel(sets * p.vloeistofPerSet, T.unitL, sets, p.vloeistofPerSet, T.unitL);
-            var water = T.maxWord + ' ' + nf(sets * p.waterMaxPerSet, 2) + ' ' + T.unitL;
+            var poeder = hoeveelCel(sets * p.poederPerSet, T.unitKg, p.poederPerSet, T.unitKg);
+            var vloeistof = hoeveelCel(sets * p.vloeistofPerSet, T.unitL, p.vloeistofPerSet, T.unitL);
+            var water = nf(sets * p.waterMaxPerSet, 2) + ' ' + T.unitL;
             return '<td>' + labelCel + '</td><td>' + poeder + '</td><td>' + vloeistof + '</td><td>' + water + '</td>';
         }
 
@@ -573,17 +726,44 @@
             var noteEl = document.getElementById('note2comp');
 
             var p = PRODUCTS[prodKey];
-            if (!p || oppervlakte <= 0 || aantalLagen <= 0) {
+            var ta = document.getElementById('takeAlong');
+            function toonLeeg() {
                 emptyEl.style.display = '';
                 tableEl.style.display = 'none';
                 noteEl.style.display = 'none';
+                ta.style.display = 'none';
+            }
+            if (!p || oppervlakte <= 0) { toonLeeg(); return; }
+
+            // === Asocret M30: UITSLUITEND de afwerkingslaag, altijd 1 laag, dikte-gedreven ===
+            if (p.afwerking) {
+                var dikte = pnum(document.getElementById('dikteMm').value);
+                if (dikte <= 0) { toonLeeg(); return; }
+                document.getElementById('resultLabel').textContent = T.resultLabel;
+                document.getElementById('headRow').innerHTML =
+                    '<th></th><th>' + p.naam + '</th><th>' + T.colWater + '</th>';
+                var m30kg = oppervlakte * p.kgPerMm * dikte;     // 1,4 kg/m2/mm (TDS)
+                var m30poeder = hoeveelCel(m30kg, T.unitKg, p.verpakKg, T.unitKg);
+                var m30water = nf(m30kg * p.waterMinPerKg, 1) + '-' + nf(m30kg * p.waterMaxPerKg, 1) + ' ' + T.unitL;
+                document.getElementById('lagenBody').innerHTML =
+                    '<tr><td>' + T.afwerkWord + T.colon + '</td><td>' + m30poeder + '</td><td>' + m30water + '</td></tr>';
+                document.getElementById('totaalRow').innerHTML = '';
+                noteEl.innerHTML = T.m30Note;
+                noteEl.style.display = 'block';
+                ta.innerHTML = T.takeWord + T.colon + ' <b>' + Math.ceil(m30kg / p.verpakKg - 1e-9) + ' ' + T.bagsWord + '</b>';
+                ta.style.display = 'block';
+                emptyEl.style.display = 'none';
+                tableEl.style.display = 'table';
                 return;
             }
 
-            // kolomkoppen product-afhankelijk
+            if (aantalLagen <= 0) { toonLeeg(); return; }
+            document.getElementById('resultLabel').textContent = T.resultLabel;
+
+            // kolomkoppen product-afhankelijk; gecontroleerde 2-regelige breuk via <br>
             if (p.tweeComp) {
                 document.getElementById('headRow').innerHTML =
-                    '<th></th><th>' + p.naam + ' ' + T.powder + '</th><th>' + p.naam + ' ' + T.liquid + '</th><th>' + T.colWaterMax + '</th>';
+                    '<th></th><th>' + p.naam + '<br>' + T.powder + '</th><th>' + p.naam + '<br>' + T.liquid + '</th><th>' + T.colWater + '<br>(' + T.maxWord + ')</th>';
             } else {
                 document.getElementById('headRow').innerHTML =
                     '<th></th><th>' + p.naam + '</th><th>' + T.colWater + '</th>';
@@ -611,6 +791,14 @@
             } else {
                 noteEl.style.display = 'none';
             }
+
+            // mee te nemen: hele verpakkingen naar boven afgerond (1K = zakken, 2K/RB400 = sets)
+            var packKg = p.tweeComp ? p.setKg : p.verpakKg;
+            var cnt = Math.ceil(totaalMat / packKg - 1e-9);
+            var woord = p.tweeComp ? T.setsWord : T.bagsWord;
+            var ta = document.getElementById('takeAlong');
+            ta.innerHTML = T.takeWord + T.colon + ' <b>' + cnt + ' ' + woord + '</b>';
+            ta.style.display = 'block';
 
             emptyEl.style.display = 'none';
             tableEl.style.display = 'table';
