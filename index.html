@@ -272,10 +272,12 @@
             color: #fff;
             table-layout: fixed;          /* gelijkmatige kolomverdeling, desktop + mobiel */
             font-weight: 700;             /* heel het kader zelfde gewicht als "totaal:" */
+            font-size: 18px;              /* basis; JS fitVerbruik() schaalt dit op tot max breedte */
         }
 
+        /* alle tabel-fonts relatief aan de basis -> auto-fit schaalt alles mee */
         .result-table th {
-            font-size: 12px;
+            font-size: 0.8em;
             font-weight: 700;
             opacity: 0.85;
             padding: 2px 4px 6px;
@@ -292,7 +294,7 @@
         }
 
         .result-table td {
-            font-size: 15px;
+            font-size: 1em;
             padding: 4px 4px;
             text-align: center;           /* waarden gecentreerd onder hun kop */
             white-space: nowrap;
@@ -303,14 +305,14 @@
         /* "(1,65x 25kg)" onder de kg/L-waarde -> smallere kolommen, past op 1 schermbreedte */
         .result-table .zak {
             display: block;
-            font-size: 11px;
+            font-size: 0.72em;
             opacity: 0.8;
         }
 
         .result-table tfoot td {
             border-top: 1px solid rgba(255,255,255,0.4);
             font-weight: 700;
-            font-size: 16px;
+            font-size: 1.05em;
             padding-top: 7px;
         }
 
@@ -320,19 +322,12 @@
             padding-top: 9px;
             border-top: 1px solid rgba(255,255,255,0.4);
             text-align: center;
-            font-size: 15px;
+            font-size: 18px;              /* basis; JS schaalt mee met de tabel */
             font-weight: 700;
             color: #fff;
         }
-        .take-along b { font-size: 17px; }
-
-        /* smalle telefoons: alles iets compacter zodat de 4-koloms 2K-tabel past */
-        @media (max-width: 400px) {
-            .result-table th { font-size: 11px; }
-            .result-table td { font-size: 13px; }
-            .result-table tfoot td { font-size: 14px; }
-            .result-table .zak { font-size: 10px; }
-        }
+        .take-along b { font-size: 1.13em; }
+        /* geen vaste-px media-overrides meer: fitVerbruik() schaalt dynamisch naar schermbreedte */
 
         .note-2comp {
             background: #eaf7fb;
@@ -716,6 +711,29 @@
             return '<td>' + labelCel + '</td><td>' + poeder + '</td><td>' + vloeistof + '</td><td>' + water + '</td>';
         }
 
+        // Auto-fit (fluid typography): schaal de lettergrootte in het verbruik-kader op
+        // tot net voor horizontale overloop, zodat de cijfers zo groot mogelijk staan.
+        function verbruikOverflow(t) {
+            var cells = t.querySelectorAll('th, td');
+            for (var i = 0; i < cells.length; i++) {
+                if (cells[i].scrollWidth > cells[i].clientWidth + 1) return true;
+            }
+            return false;
+        }
+        function fitVerbruik() {
+            var t = document.getElementById('resultTable');
+            if (!t || t.style.display === 'none') return;
+            var lo = 12, hi = 34, best = 12;
+            for (var i = 0; i < 7; i++) {
+                var mid = (lo + hi) / 2;
+                t.style.fontSize = mid + 'px';
+                if (verbruikOverflow(t)) { hi = mid; } else { best = mid; lo = mid; }
+            }
+            t.style.fontSize = best + 'px';
+            document.getElementById('takeAlong').style.fontSize = best + 'px';   // "mee te nemen" schaalt mee
+        }
+        window.addEventListener('resize', fitVerbruik);
+
         function calculate() {
             var prodKey = document.getElementById('product').value;
             var oppervlakte = parseFloat(document.getElementById('oppervlakte').value) || 0;
@@ -754,6 +772,7 @@
                 ta.style.display = 'block';
                 emptyEl.style.display = 'none';
                 tableEl.style.display = 'table';
+                fitVerbruik();
                 return;
             }
 
@@ -802,6 +821,7 @@
 
             emptyEl.style.display = 'none';
             tableEl.style.display = 'table';
+            fitVerbruik();
         }
 
         if ('serviceWorker' in navigator) {
