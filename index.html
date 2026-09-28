@@ -35,6 +35,7 @@
            x verpakking = mengklaar-kg / set als DECIMAAL (= aantal sets).
            V3.1.1: beide 2-comp kolomkoppen met volledige productnaam.
            V3.2.0: aantal-lagen-opties toegespitst per product (1K: 2/W1 of 3/W2.1; 2K: 1 of 2; RB400: 2). V3.2.1: 2K krijgt ook optie 1 laag.
+           V4.1.0: Aquafin 1K-PLUS als 2e product (tussen 1K en 2K): motor = 1K, eigen notitie (30 min, 90 min), meng-hulp standaard halve zak 12,5 kg + 3,35 L. Zak-ontbinding onder 1 volle verpakking weggelaten (was dubbel: '7,0 kg (7kg)').
            Vorige versie: archive/...V3_1_0...
            ============================================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -373,6 +374,7 @@
                     <select id="product">
                         <option value="" selected></option>
                         <option value="1k">Aquafin 1K</option>
+                        <option value="1kplus">Aquafin 1K‑PLUS</option>
                         <option value="2k">Aquafin 2K</option>
                         <option value="rb400">Aquafin RB400</option>
                         <option value="m30" id="opt-m30">Asocret M30</option>
@@ -433,13 +435,21 @@
 
     <script>
         // === Vertalingen (per taal ingevuld door de generator) ===
-        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт Aquafin", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата", "resetAria": "Скинути", "mengTitle": "Помічник змішування", "mengPoederPh": "Порошок (кг)", "ratioWord": "співвідношення", "optWord": "необов'язково", "takeWord": "Взяти з собою", "bagsWord": "мішків", "setsWord": "наборів", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "m30Option": "Asocret M30 (опорядження)", "dikteLabel": "Товщина опоряджувального шару (мм)", "resultAfwerk": "Витрата опоряджувального шару", "afwerkWord": "опорядження", "m30Note": "Asocret M30 - лише для опоряджувального шару, в 1 шар. Стандарт 5 мм (TDS: 3-30 мм). Витрата 1,4 кг/м² на мм. 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
+        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт Aquafin", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата", "resetAria": "Скинути", "mengTitle": "Помічник змішування", "mengPoederPh": "Порошок (кг)", "ratioWord": "співвідношення", "optWord": "необов'язково", "takeWord": "Взяти з собою", "bagsWord": "мішків", "setsWord": "наборів", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "m30Option": "Asocret M30 (опорядження)", "dikteLabel": "Товщина опоряджувального шару (мм)", "resultAfwerk": "Витрата опоряджувального шару", "afwerkWord": "опорядження", "m30Note": "Asocret M30 - лише для опоряджувального шару, в 1 шар. Стандарт 5 мм (TDS: 3-30 мм). Витрата 1,4 кг/м² на мм. 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "plusNote": "Aquafin 1K‑PLUS - така ж витрата і вода, як в Aquafin 1K (6,7 л на мішок 25 кг). Час використання лише бл. 30 хвилин: змішуйте менші порції, стандартно півмішка (12,5 кг + 3,35 л). Наступний шар через бл. 90 хвилин, макс. 2 мм на шар. Розчин, що почав тужавіти, не розбавляти водою чи свіжим розчином.", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
 
         // Gezaghebbende verbruikswaarden (taalneutraal): AQP dichtingscalculator V7 + Schomburg TDS.
         var PRODUCTS = {
             '1k': {
                 naam: 'Aquafin 1K', perLaag: 1.75, tweeComp: false,
                 verpakKg: 25, waterPerKg: 6.7 / 25,
+                lagenOpties: [{ n: 2, w: 'W1' }, { n: 3, w: 'W2.1' }]
+            },
+            // V4.1.0: AQUAFIN-1K-PLUS (TDS 204249, 07/01/2026). Zelfde verbruik/verpakking/water als 1K
+            // (1,75 kg/m2/laag, 25 kg, 6,7 L/25 kg). Verschil = verwerkingstijd 30 min (kleinere batch,
+            // meng-hulp stelt halve zak voor) en overwerkbaar na ca. 90 min, max 2 mm per arbeidsgang.
+            '1kplus': {
+                naam: 'Aquafin 1K‑PLUS', perLaag: 1.75, tweeComp: false,
+                verpakKg: 25, waterPerKg: 6.7 / 25, mengDefaultKg: 12.5, noteKey: 'plusNote',
                 lagenOpties: [{ n: 2, w: 'W1' }, { n: 3, w: 'W2.1' }]
             },
             '2k': {
@@ -630,6 +640,12 @@
                 }
                 mengCells.push(cell);
             });
+            // V4.1.0: product met standaardbatch (1K-PLUS: halve zak) -> poeder voorvullen + doorrekenen
+            if (p && p.mengDefaultKg && mengCells.length) {
+                mengCells[0].el.value = nf(p.mengDefaultKg, 1);
+                updateMeng(mengCells[0]);
+                updateUnitPosition(mengCells[0].el);
+            }
         }
 
         function pnum(s) { return parseFloat(String(s).replace(/\s/g, '').replace(',', '.')) || 0; }
@@ -684,6 +700,8 @@
         function hoeveelCel(waarde, eenheid, packValue, packUnit) {
             var full = Math.floor(waarde / packValue + 1e-9);   // volle verpakkingen
             var rem = waarde - full * packValue;                // losse rest (exact)
+            // V4.1.0: drijvende-komma-rest vlak onder een volle verpakking (49,99995 -> "1x 25kg + 25kg") als vol tellen
+            if (packValue - rem < 0.05) { full += 1; rem = 0; }
             var pv = nf(packValue, packValue === Math.floor(packValue) ? 0 : 1);
             var parts = [];
             if (full >= 1) parts.push(full + 'x ' + pv + packUnit);   // steeds als veelvoud, ook 1x
@@ -691,7 +709,9 @@
                 var remStr = (Math.abs(rem - Math.round(rem)) < 0.05) ? nf(Math.round(rem), 0) : nf(rem, 1);
                 parts.push(remStr + packUnit);
             }
-            if (!parts.length) parts.push(nf(waarde, 1) + packUnit);   // ~0
+            // V4.1.0: subregel weglaten als de ontbinding niets toevoegt: geen volle verpakking
+            // ("7,0 kg (7kg)") of precies 1 volle verpakking zonder rest ("25,0 kg (1x 25kg)")
+            if (full < 1 || (full === 1 && rem < 0.05)) return nf(waarde, 1) + ' ' + eenheid;
             return nf(waarde, 1) + ' ' + eenheid + '<span class="zak"> (' + parts.join(' + ') + ')</span>';
         }
 
@@ -806,6 +826,9 @@
                 var watermax = T.waterMaxTpl.replace('{amt}', nf(p.waterMaxPerSet, 2)).replace('{setkg}', p.setKg);
                 noteEl.innerHTML = '<b>' + T.noteBoldTpl.replace('{naam}', p.naam) + '</b> '
                     + T.noteRestTpl.replace('{ratio}', ratioStr).replace('{watermax}', watermax);
+                noteEl.style.display = 'block';
+            } else if (p.noteKey && T[p.noteKey]) {
+                noteEl.innerHTML = T[p.noteKey];   // V4.1.0: 1K-PLUS verwerkingsnotitie
                 noteEl.style.display = 'block';
             } else {
                 noteEl.style.display = 'none';
