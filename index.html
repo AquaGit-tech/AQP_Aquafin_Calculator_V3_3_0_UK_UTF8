@@ -35,6 +35,7 @@
            x verpakking = mengklaar-kg / set als DECIMAAL (= aantal sets).
            V3.1.1: beide 2-comp kolomkoppen met volledige productnaam.
            V3.2.0: aantal-lagen-opties toegespitst per product (1K: 2/W1 of 3/W2.1; 2K: 1 of 2; RB400: 2). V3.2.1: 2K krijgt ook optie 1 laag.
+           V4.1.1 (28/09/2026): 1K-PLUS meng-hulp standaard 4 kg per man (was halve zak 12,5 kg): bij 5-6 m2/u/man (DAGCAPACITEITEN v2.0 S.11) en 1,75 kg/m2/laag is 12,5 kg = 7,1 m2 = 70-85 min werk, ver boven de verwerkingstijd van 30 min. 4 kg = ca. 2,3 m2 = 23-27 min. Notitie in 4 talen aangepast.
            V4.1.0: Aquafin 1K-PLUS als 2e product (tussen 1K en 2K): motor = 1K, eigen notitie (30 min, 90 min), meng-hulp standaard halve zak 12,5 kg + 3,35 L. Zak-ontbinding onder 1 volle verpakking weggelaten (was dubbel: '7,0 kg (7kg)').
            Vorige versie: archive/...V3_1_0...
            ============================================================ */
@@ -435,7 +436,7 @@
 
     <script>
         // === Vertalingen (per taal ingevuld door de generator) ===
-        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт Aquafin", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата", "resetAria": "Скинути", "mengTitle": "Помічник змішування", "mengPoederPh": "Порошок (кг)", "ratioWord": "співвідношення", "optWord": "необов'язково", "takeWord": "Взяти з собою", "bagsWord": "мішків", "setsWord": "наборів", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "m30Option": "Asocret M30 (опорядження)", "dikteLabel": "Товщина опоряджувального шару (мм)", "resultAfwerk": "Витрата опоряджувального шару", "afwerkWord": "опорядження", "m30Note": "Asocret M30 - лише для опоряджувального шару, в 1 шар. Стандарт 5 мм (TDS: 3-30 мм). Витрата 1,4 кг/м² на мм. 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "plusNote": "Aquafin 1K‑PLUS - така ж витрата і вода, як в Aquafin 1K (6,7 л на мішок 25 кг). Час використання лише бл. 30 хвилин: змішуйте менші порції, стандартно півмішка (12,5 кг + 3,35 л). Наступний шар через бл. 90 хвилин, макс. 2 мм на шар. Розчин, що почав тужавіти, не розбавляти водою чи свіжим розчином.", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
+        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт Aquafin", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата", "resetAria": "Скинути", "mengTitle": "Помічник змішування", "mengPoederPh": "Порошок (кг)", "ratioWord": "співвідношення", "optWord": "необов'язково", "takeWord": "Взяти з собою", "bagsWord": "мішків", "setsWord": "наборів", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "m30Option": "Asocret M30 (опорядження)", "dikteLabel": "Товщина опоряджувального шару (мм)", "resultAfwerk": "Витрата опоряджувального шару", "afwerkWord": "опорядження", "m30Note": "Asocret M30 - лише для опоряджувального шару, в 1 шар. Стандарт 5 мм (TDS: 3-30 мм). Витрата 1,4 кг/м² на мм. 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "plusNote": "Aquafin 1K‑PLUS - така ж витрата і вода, як в Aquafin 1K (6,7 л на мішок 25 кг). Час використання лише бл. 30 хвилин: змішуйте макс. бл. 4 кг на одного працівника (+ 1,07 л води, бл. 2 м² на шар); машиною 1 мішок на заправку. У спеку менше. Наступний шар через бл. 90 хвилин, макс. 2 мм на шар. Розчин, що почав тужавіти, не розбавляти водою чи свіжим розчином.", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
 
         // Gezaghebbende verbruikswaarden (taalneutraal): AQP dichtingscalculator V7 + Schomburg TDS.
         var PRODUCTS = {
@@ -446,10 +447,10 @@
             },
             // V4.1.0: AQUAFIN-1K-PLUS (TDS 204249, 07/01/2026). Zelfde verbruik/verpakking/water als 1K
             // (1,75 kg/m2/laag, 25 kg, 6,7 L/25 kg). Verschil = verwerkingstijd 30 min (kleinere batch,
-            // meng-hulp stelt halve zak voor) en overwerkbaar na ca. 90 min, max 2 mm per arbeidsgang.
+            // meng-hulp stelt sinds V4.1.1 4 kg per man voor) en overwerkbaar na ca. 90 min, max 2 mm per arbeidsgang.
             '1kplus': {
                 naam: 'Aquafin 1K‑PLUS', perLaag: 1.75, tweeComp: false,
-                verpakKg: 25, waterPerKg: 6.7 / 25, mengDefaultKg: 12.5, noteKey: 'plusNote',
+                verpakKg: 25, waterPerKg: 6.7 / 25, mengDefaultKg: 4, noteKey: 'plusNote',
                 lagenOpties: [{ n: 2, w: 'W1' }, { n: 3, w: 'W2.1' }]
             },
             '2k': {
@@ -640,7 +641,7 @@
                 }
                 mengCells.push(cell);
             });
-            // V4.1.0: product met standaardbatch (1K-PLUS: halve zak) -> poeder voorvullen + doorrekenen
+            // V4.1.0: product met standaardbatch (1K-PLUS: sinds V4.1.1 4 kg per man) -> poeder voorvullen + doorrekenen
             if (p && p.mengDefaultKg && mengCells.length) {
                 mengCells[0].el.value = nf(p.mengDefaultKg, 1);
                 updateMeng(mengCells[0]);
