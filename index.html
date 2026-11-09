@@ -347,6 +347,8 @@
         .note-2comp b { color: #1c5666; }
 
         .meng-row { display: grid; gap: 8px; align-items: start; }   /* kolommen dynamisch per product */
+        .meng-info { font-size: 13px; color: #535554; line-height: 1.4; margin-top: 8px; }   /* V4.3.0: per verpakking + voorstel */
+        .meng-info:empty { display: none; }
         .meng-label { font-size: 12px; color: #535554; font-weight: 600; margin-bottom: 3px; text-transform: capitalize; line-height: 1.2; }
 
         .footer {
@@ -434,6 +436,7 @@
         <div class="calc-group">
             <div class="group-header" id="gh-meng"></div>
             <div class="meng-row" id="mengRow"></div>
+            <div class="meng-info" id="mengInfo"></div>
         </div>
 
         <div class="footer" id="footer"></div>
@@ -441,13 +444,13 @@
 
     <script>
         // === Vertalingen (per taal ingevuld door de generator) ===
-        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата", "resetAria": "Скинути", "mengTitle": "Помічник змішування", "mengPoederPh": "Порошок (кг)", "ratioWord": "співвідношення", "optWord": "необов'язково", "takeWord": "Взяти з собою", "bagsWord": "мішків", "setsWord": "наборів", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія), співвідношення {ratio} - постачається в наборі, ретельно змішайте обидва компоненти. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "m30dOption": "Asocret M30 (гідроізоляційний шар)", "dikteLabelD": "Товщина гідроізоляційного шару", "dichtWord": "гідроізоляція", "unitCm": "см", "m30dNote": "Asocret M30 - гідроізоляційний шар в 1 шар, 1 см (стандарт AQP), 1,5 см або 2 см. Витрата 1,4 кг/м² на мм (1 см = 14 кг/м²). 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "m30Option": "Asocret M30 (опорядження)", "dikteLabel": "Товщина опоряджувального шару (мм)", "resultAfwerk": "Витрата опоряджувального шару", "afwerkWord": "опорядження", "m30Note": "Asocret M30 - лише для опоряджувального шару, в 1 шар. Стандарт 5 мм (TDS: 3-30 мм). Витрата 1,4 кг/м² на мм. 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "plusNote": "Aquafin 1K‑PLUS - така ж витрата і вода, як в Aquafin 1K (6,7 л на мішок 25 кг). Час використання лише бл. 30 хвилин: змішуйте макс. бл. 4 кг на одного працівника (+ 1,07 л води, бл. 2 м² на шар); машиною 1 мішок на заправку. У спеку менше. Наступний шар через бл. 90 хвилин, макс. 2 мм на шар. Розчин, що почав тужавіти, не розбавляти водою чи свіжим розчином.", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
+        var T = {"lang": "uk", "locale": "uk-UA", "title": "Калькулятор Aquafin", "clientPh": "Ім'я клієнта або адреса об'єкта", "productLabel": "Продукт", "productPh": "Виберіть продукт", "layersLabel": "Кількість шарів", "layersPh": "Кількість шарів", "surfaceLabel": "Загальна площа", "surfacePh": "Загальна площа (м²)", "resultLabel": "Витрата", "resetAria": "Скинути", "mengTitle": "Помічник змішування", "mengPoederPh": "Порошок (кг)", "ratioWord": "співвідношення", "optWord": "необов'язково", "takeWord": "Взяти з собою", "bagsWord": "мішків", "setsWord": "наборів", "layerSingular": "шар", "layerPlural": "шари", "colon": ":", "totalWord": "разом", "powder": "порошок", "liquid": "рідина", "colWater": "вода", "colWaterMax": "вода (макс.)", "maxWord": "макс.", "unitKg": "кг", "unitL": "л", "unitM2": "м²", "noteBoldTpl": "{naam} є двокомпонентним продуктом.", "noteRestTpl": "Порошок + рідина (дисперсія): завжди змішуйте у ваговому співвідношенні {ratio} (порошок : рідина), також коли використовуєте частину набору. Вода необов'язкова, {watermax}, лише для зручності нанесення.", "waterMaxTpl": "макс. {amt} л на набір {setkg} кг", "m30dOption": "Asocret M30 (гідроізоляційний шар)", "dikteLabelD": "Товщина гідроізоляційного шару", "dichtWord": "гідроізоляція", "unitCm": "см", "m30dNote": "Asocret M30 - гідроізоляційний шар в 1 шар, 1 см (стандарт AQP), 1,5 см або 2 см. Витрата 1,4 кг/м² на мм (1 см = 14 кг/м²). 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "m30Option": "Asocret M30 (опорядження)", "dikteLabel": "Товщина опоряджувального шару (мм)", "resultAfwerk": "Витрата опоряджувального шару", "afwerkWord": "опорядження", "m30Note": "Asocret M30 - лише для опоряджувального шару, в 1 шар. Стандарт 5 мм (TDS: 3-30 мм). Витрата 1,4 кг/м² на мм. 1-компонентний: вода 4,5-5,25 л на мішок 25 кг.", "mengZakTpl": "На мішок {kg} кг: {w} л води.", "mengSetTpl": "На набір {set} кг: {p} кг порошку + {v} л рідини (вода макс. {w} л).", "mengZakM30Tpl": "На мішок {kg} кг: {w1}-{w2} л води.", "mengVoorstelTpl": "Пропозиція на одного працівника за раз: {kg} кг порошку (час використання бл. {min} хвилин).", "mengKelder1k": "У прохолодному підвалі 1K довше придатний до роботи: до пів мішка (12,5 кг) за раз.", "plusNote": "Aquafin 1K‑PLUS - така ж витрата і вода, як в Aquafin 1K (6,7 л на мішок 25 кг). Час використання лише бл. 30 хвилин: змішуйте макс. бл. 4 кг на одного працівника (+ 1,07 л води, бл. 2 м² на шар); машиною 1 мішок на заправку. У спеку менше. Наступний шар через бл. 90 хвилин, макс. 2 мм на шар. Розчин, що почав тужавіти, не розбавляти водою чи свіжим розчином.", "footer": "Витрата за стандартом AQP (калькулятор гідроізоляції V7) та технічними картами Schomburg. Орієнтовно. Рідина (2K/RB400) у літрах за густини дисперсії ~1,0 кг/л."};
 
         // Gezaghebbende verbruikswaarden (taalneutraal): AQP dichtingscalculator V7 + Schomburg TDS.
         var PRODUCTS = {
             '1k': {
                 naam: 'Aquafin 1K', perLaag: 1.75, tweeComp: false,
-                verpakKg: 25, waterPerKg: 6.7 / 25,
+                verpakKg: 25, waterPerKg: 6.7 / 25, mengDefaultKg: 8, verwerkMin: 60, kelderNote: true,
                 lagenOpties: [{ n: 2, w: 'W1' }, { n: 3, w: 'W2.1' }]
             },
             // V4.1.0: AQUAFIN-1K-PLUS (TDS 204249, 07/01/2026). Zelfde verbruik/verpakking/water als 1K
@@ -455,17 +458,17 @@
             // meng-hulp stelt sinds V4.1.1 4 kg per man voor) en overwerkbaar na ca. 90 min, max 2 mm per arbeidsgang.
             '1kplus': {
                 naam: 'Aquafin 1K‑PLUS', perLaag: 1.75, tweeComp: false,
-                verpakKg: 25, waterPerKg: 6.7 / 25, mengDefaultKg: 4, noteKey: 'plusNote',
+                verpakKg: 25, waterPerKg: 6.7 / 25, mengDefaultKg: 4, verwerkMin: 30, noteKey: 'plusNote',
                 lagenOpties: [{ n: 2, w: 'W1' }, { n: 3, w: 'W2.1' }]
             },
             '2k': {
                 naam: 'Aquafin 2K', perLaag: 1.75, tweeComp: true, ratioA: 2.5,
-                setKg: 35, poederPerSet: 25, vloeistofPerSet: 10, waterMaxPerSet: 0.5,
+                setKg: 35, poederPerSet: 25, vloeistofPerSet: 10, waterMaxPerSet: 0.5, mengDefaultKg: 5, verwerkMin: 60,
                 lagenOpties: [{ n: 1 }, { n: 2 }]
             },
             'rb400': {
                 naam: 'Aquafin RB400', perLaag: 2.40, tweeComp: true, ratioA: 1.5,
-                setKg: 24, poederPerSet: 14.4, vloeistofPerSet: 9.6, waterMaxPerSet: 0.24,
+                setKg: 24, poederPerSet: 14.4, vloeistofPerSet: 9.6, waterMaxPerSet: 0.24, mengDefaultKg: 4, verwerkMin: 45,
                 lagenOpties: [{ n: 2 }]
             },
             // V4.2.0: Asocret M30 als DICHTINGSLAAG (Wim 09/11/2026): 1 laag, vaste diktes 10/15/20 mm
@@ -474,7 +477,7 @@
                 naam: 'Asocret M30', afwerking: true, dichting: true, tweeComp: false,
                 kgPerMm: 1.4, verpakKg: 25, waterPerKg: 4.875 / 25,
                 waterMinPerKg: 4.5 / 25, waterMaxPerKg: 5.25 / 25,
-                dikteOpties: [10, 15, 20], dikteDefault: 10
+                dikteOpties: [10, 15, 20], dikteDefault: 10, verwerkMin: 45
             },
             // Asocret M30: afwerkingslaag, altijd 1 laag, dikte-gedreven (TDS: 1,4 kg/m2/mm).
             // 1-component (poeder + water). Water TDS 4,5-5,25 L/25 kg -> meng-hulp: middelpunt 4,875.
@@ -482,7 +485,7 @@
                 naam: 'Asocret M30', afwerking: true, tweeComp: false,
                 kgPerMm: 1.4, verpakKg: 25, waterPerKg: 4.875 / 25,
                 waterMinPerKg: 4.5 / 25, waterMaxPerKg: 5.25 / 25,
-                dikteDefault: 5, dikteMin: 3, dikteMax: 30
+                dikteDefault: 5, dikteMin: 3, dikteMax: 30, verwerkMin: 45
             }
         };
 
@@ -594,9 +597,9 @@
             mengBuild();
         });
         lagenSelect.addEventListener('change', function() { styleSelect(this); calculate(); });
-        document.getElementById('dikteSel').addEventListener('change', function() { calculate(); });
+        document.getElementById('dikteSel').addEventListener('change', function() { calculate(); mengBuild(); });
         document.getElementById('dikteMm').addEventListener('input', function() {
-            calculate(); updateUnitPosition(this);
+            calculate(); updateUnitPosition(this); mengBuild();
         });
 
         function resetCalculator() {
@@ -626,7 +629,8 @@
             if (p.afwerking) {
                 return [
                     { per: p.verpakKg, unit: T.unitKg, word: T.powder },
-                    { rangeMin: p.verpakKg * p.waterMinPerKg, rangeMax: p.verpakKg * p.waterMaxPerKg, unit: T.unitL, word: T.colWater }
+                    { per: p.verpakKg * p.waterPerKg, rangeMin: p.verpakKg * p.waterMinPerKg, rangeMax: p.verpakKg * p.waterMaxPerKg,
+                      unit: T.unitL, word: T.colWater, invulbaar: true }
                 ];
             }
             if (!p.tweeComp) {
@@ -656,23 +660,58 @@
                 var wrap = document.createElement('div'); wrap.className = 'input-with-unit';
                 var inp = document.createElement('input');
                 inp.type = 'text'; inp.setAttribute('inputmode', 'decimal'); inp.placeholder = '';
-                if (isRange) { inp.readOnly = true; }   // range = enkel weergave (niet omkeerbaar)
+                if (isRange && !c.invulbaar) { inp.readOnly = true; }   // range = enkel weergave; V4.3.0: M30-water wel invulbaar (middelpunt)
                 var u = document.createElement('span'); u.className = 'input-unit'; u.textContent = c.unit;
                 wrap.appendChild(inp); wrap.appendChild(u);
                 cellWrap.appendChild(lab); cellWrap.appendChild(wrap);
                 row.appendChild(cellWrap);
                 var cell = { el: inp, per: c.per, rangeMin: c.rangeMin, rangeMax: c.rangeMax };
-                if (!isRange) {
+                if (!isRange || c.invulbaar) {
                     inp.addEventListener('input', function () { updateMeng(cell); updateUnitPosition(inp); });
                 }
                 mengCells.push(cell);
             });
-            // V4.1.0: product met standaardbatch (1K-PLUS: sinds V4.1.1 4 kg per man) -> poeder voorvullen + doorrekenen
-            if (p && p.mengDefaultKg && mengCells.length) {
-                mengCells[0].el.value = nf(p.mengDefaultKg, 1);
+            // V4.3.0 (Wim 09/11): elk product krijgt een voorstel per man per keer (verwerkingstijd TDS), poeder voorvullen + doorrekenen
+            var batch = mengBatch(p);
+            if (batch > 0 && mengCells.length) {
+                mengCells[0].el.value = nf(batch, 1);
                 updateMeng(mengCells[0]);
                 updateUnitPosition(mengCells[0].el);
             }
+            mengInfo(p, batch);
+        }
+
+        // V4.3.0: poeder per man per keer = wat 1 man verwerkt binnen de verwerkingstijd (TDS) min meng-/rijpingstijd en marge.
+        // 1K 8 kg (60 min) / 1K-PLUS 4 kg (30 min) / 2K 5 kg poeder (60 min) / RB400 4 kg poeder (45 min): vast in PRODUCTS.
+        // M30 (45 min): netto 35 min x 5 m2/u x 1,4 kg/m2/mm x dikte, max. 1 zak, afgerond naar beneden op 0,5 kg.
+        function mengBatch(p) {
+            if (!p) return 0;
+            if (p.mengDefaultKg) return p.mengDefaultKg;
+            if (p.afwerking) {
+                var dikte = p.dikteOpties ? pnum(document.getElementById('dikteSel').value) : pnum(document.getElementById('dikteMm').value);
+                if (dikte <= 0) return 0;
+                var kg = (35 / 60) * 5 * p.kgPerMm * dikte;
+                return Math.min(p.verpakKg, Math.floor(kg * 2) / 2);
+            }
+            return 0;
+        }
+
+        function mengInfo(p, batch) {
+            var el = document.getElementById('mengInfo');
+            if (!p) { el.innerHTML = ''; return; }
+            var regels = [];
+            if (p.afwerking) {
+                regels.push(T.mengZakM30Tpl.replace('{kg}', nf(p.verpakKg, 0)).replace('{w1}', nf(p.verpakKg * p.waterMinPerKg, 2)).replace('{w2}', nf(p.verpakKg * p.waterMaxPerKg, 2)));
+            } else if (p.tweeComp) {
+                regels.push(T.mengSetTpl.replace('{set}', nf(p.setKg, 0)).replace('{p}', nf(p.poederPerSet, 1)).replace('{v}', nf(p.vloeistofPerSet, 1)).replace('{w}', nf(p.waterMaxPerSet, 2)));
+            } else {
+                regels.push(T.mengZakTpl.replace('{kg}', nf(p.verpakKg, 0)).replace('{w}', nf(p.verpakKg * p.waterPerKg, 1)));
+            }
+            if (batch > 0 && p.verwerkMin) {
+                regels.push('<b>' + T.mengVoorstelTpl.replace('{kg}', nf(batch, 1)).replace('{min}', p.verwerkMin) + '</b>');
+            }
+            if (p.kelderNote) regels.push(T.mengKelder1k);
+            el.innerHTML = regels.join('<br>');
         }
 
         function pnum(s) { return parseFloat(String(s).replace(/\s/g, '').replace(',', '.')) || 0; }
